@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>边狱巴士抽卡器</title>
+    <style>
+        p{
+            margin:0;
+        }
+        body{
+            margin:0; 
+            background-color: black;          
+        }
+        .title{
+            margin-top:20px;
+            color:rgb(255, 255, 205);
+            text-align: center;
+            line-height: 100px;
+            font-size:40px;
+        }
+        .board{
+            display:flex;
+            justify-content: center;
+            margin-top:20px;
+        }
+        .board-background{
+            border:5px solid rgba(255, 174, 0, 0.801);
+            border-radius: 20px;
+            background-color: rgba(134, 31, 31, 0.637);
+            height: 650px;
+            width:1500px;
+            display:flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+        .lunacy{
+            display:flex;
+            align-items: center;
+            gap:20px;
+        }
+        .lunacy-img{
+            width:100px;
+        }
+        .lunacy-show{
+            display:flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-self: stretch;
+        }
+        .lunacy-num{
+            color:rgb(255, 255, 209);
+            margin:0;
+        }
+
+        .lunacy-input{
+            width: 140px;
+            height: 32px;
+            padding: 0 10px;
+            border: 2px solid rgba(255, 174, 0, 0.8);
+            border-radius: 8px;
+            background-color: rgba(100, 40, 40, 0.8);
+            color: rgb(255, 255, 209);
+            font-size: 15px;
+            outline: none;
+        }
+        .lunacy-input:focus {
+            border-color: #ffcc00;
+            background-color: rgba(120, 50, 50, 0.9);
+        }
+        .lunacy-input::placeholder{
+            color: rgba(255, 255, 209, 0.8);
+        }
+
+        .extract{
+            width: 150px;
+            height: 45px;
+            border: 2px solid #ffaa22;
+            border-radius: 8px;
+            background: rgba(90, 20, 20, 0.8);
+            color: #fff6cc;
+            font-size: 14px;
+            display:flex;
+            justify-content:space-evenly;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            outline:none;
+        }
+        .extract:hover{
+            border-color: #ffdd55;
+            box-shadow: 0 0 12px #ffaa22;
+        }
+        .one-extract{
+            display:flex;
+            flex-direction: column;
+
+        }
+        .resultbox{
+            height:500px;
+            width:1400px;
+            display:flex;
+            justify-content: space-evenly;
+            align-items: center;
+            flex-wrap:wrap;
+        }
+        .resultbox .result{
+            width:250px;
+            height:200px;
+            color:rgb(255, 255, 209);
+            display:flex;
+            flex-direction: column;
+            text-align: center;
+            justify-content:space-evenly;
+            align-items: center;
+            font-size: 15px;
+        }
+        .img-wrap{
+            width:252px;
+            height:141.75px;
+            border:5px solid rgba(255, 174, 0, 0.8);
+            border-radius: 10px;
+            overflow: hidden;
+            position:relative;
+            z-index:3
+        }
+        .img{
+            width:252px;
+            height:141.75px;
+            background:no-repeat;
+            background-position:center center;
+            background-size:cover;
+            overflow: hidden;
+            position:absolute;
+        }
+        #change .img{
+            animation:imgflash 10s infinite;
+        }
+        @keyframes imgflash{
+            0% {opacity:1}
+            25% {opacity:0}
+            50% {opacity:0}
+            75% {opacity:1}
+            100% {opacity:1}
+        }
+    </style>
+    <script>
+        const _1ppath=["李箱LCB罪人.webp","浮士德LCB罪人.webp","堂吉诃德LCB罪人.webp","堂吉诃德LCB罪人.webp","良秀LCB罪人.webp","默尔索LCB罪人.webp","鸿璐LCB罪人.webp","希斯克利夫LCB罪人.webp","以实玛利LCB罪人.webp","罗佳LCB罪人.webp","辛克莱LCB罪人.webp","奥提斯LCB罪人.webp","格里高尔LCB罪人.webp",]
+        const _2ppath=["堂吉诃德脑叶公司E.G.O提灯.webp",]
+        const _3ppath=["堂吉诃德食指代行者-绽放E.G.O代行.webp",]
+        const rate1=0.843,rate2=0.128,rate3=0.029
+        function extract_for_one()
+        {
+            let lunacy_num=document.getElementsByClassName('lunacy-input')[0]
+            let lunacy_value=Number(lunacy_num.value)
+            if (lunacy_value<130)
+            {
+                window.alert('请输入正确狂气数量!')
+            }
+            else
+            {
+                lunacy_num.value=lunacy_value-130
+                let html_content=''
+                let extract_random=Math.random()
+                if (extract_random<=rate1)
+                {
+                    var path=_1ppath[Math.floor(Math.random()*_1ppath.length)]
+                    var match=path.search(/.webp/i)
+                    var name=path.slice(0,match)
+                    html_content+=`<div class="result"><div class="img" style="background-image:url('1p-img/${path}')"></div>${name}<br>⭐</div>`
+                }
+                else if (extract_random<=rate1+rate2)
+                {
+                    var path=_2ppath[Math.floor(Math.random()*_2ppath.length)]
+                    var match=path.search(/.webp/i)
+                    var name=path.slice(0,match)
+                    html_content+=`<div class="result"><div class="img" style="background-image:url('2p-img/${path}')"></div>${name}<br>⭐⭐</div>`
+                }
+                else
+                {
+                    var path=_3ppath[Math.floor(Math.random()*_3ppath.length)]
+                    var match=path.search(/.webp/i)
+                    var name=path.slice(0,match)
+                    html_content+=`<div class="result"><div class="img" style="background-image:url('3p-img/${path}')"></div>${name}<br>⭐⭐⭐</div>`
+                }   
+                let parent=document.querySelector('.resultbox')
+                parent.innerHTML=html_content
+            }
+        }
+        function extract_for_ten()
+        {
+            let lunacy_num=document.getElementsByClassName('lunacy-input')[0]
+            let lunacy_value=Number(lunacy_num.value)
+            if (lunacy_value<1300)
+            {
+                window.alert('请输入正确狂气数量!')
+            }
+            else
+            {
+                lunacy_num.value=lunacy_value-1300
+                let html_content=''
+                for (let i=1;i<=9;i++)
+                {
+                    let extract_random=Math.random()
+                    if (extract_random<=rate1)
+                    {
+                        var path=_1ppath[Math.floor(Math.random()*_1ppath.length)]
+                        var ext=path.match(/\.[\w]+$/i)
+                        var match=path.search(/.webp/i)
+                        var name=path.slice(0,match)
+                        html_content+=`
+                        <div class="result">
+                            <div class="img-wrap">
+                                <div class="img" style="background-image:url('1p-img/${path}')"></div>
+                            </div>
+                            ${name}
+                            <br>
+                            ⭐
+                        </div>`
+                    }
+                    else if (extract_random<=rate1+rate2)
+                    {
+                        var path=_2ppath[Math.floor(Math.random()*_2ppath.length)]
+                        var match=path.search(/.webp/i)
+                        var name=path.slice(0,match)
+                        html_content+=`
+                        <div class="result">
+                            <div class="img-wrap" id="change">
+                                <div class="img" style="background-image:url('2p-img/${path}');z-index:2;animation-delay:2s"></div>
+                                <div class="img" style="background-image:url('2p-img/${name}-三破.webp');z-index:1;animation-delay:7s"></div>
+                            </div>
+                            ${name}
+                            <br>
+                            ⭐⭐
+                        </div>`
+                    }
+                    else
+                    {
+                        var path=_3ppath[Math.floor(Math.random()*_3ppath.length)]
+                        var match=path.search(/.webp/i)
+                        var name=path.slice(0,match)
+                        html_content+=`
+                        <div class="result">
+                            <div class="img-wrap" id="change">
+                                <div class="img" style="background-image:url('3p-img/${path}');z-index:2;animation-delay:2s"></div>
+                                <div class="img" style="background-image:url('3p-img/${name}-三破.webp');z-index:1;animation-delay:7s"></div>
+                            </div>
+                            ${name}
+                            <br>
+                            ⭐⭐⭐
+                        </div>`
+                    }
+                }
+                let extract_random=Math.random()
+                if (extract_random<=rate1+rate2)
+                {
+                    var path=_2ppath[Math.floor(Math.random()*_2ppath.length)]
+                    var match=path.search(/.webp/i)
+                    var name=path.slice(0,match)
+                    html_content+=`
+                    <div class="result">
+                        <div class="img-wrap" id="change">
+                            <div class="img" style="background-image:url('2p-img/${path}');z-index:2;animation-delay:2s"></div>
+                            <div class="img" style="background-image:url('2p-img/${name}-三破.webp');z-index:1;animation-delay:7s"></div>
+                        </div>
+                        ${name}
+                        <br>
+                        ⭐⭐
+                    </div>`
+                }
+                else
+                {
+                    var path=_3ppath[Math.floor(Math.random()*_3ppath.length)]
+                    var match=path.search(/.webp/i)
+                    var name=path.slice(0,match)
+                    console.log(`3p-img/${name}-三破.webp`)
+                    html_content+=`
+                    <div class="result">
+                        <div class="img-wrap" id="change">
+                            <div class="img" style="background-image:url('3p-img/${path}');z-index:2;animation-delay:2s"></div>
+                            <div class="img" style="background-image:url('3p-img/${name}-三破.webp');z-index:1;animation-delay:7s"></div>
+                        </div>
+                        ${name}
+                        <br>
+                        ⭐⭐⭐
+                    </div>`
+                }
+                let parent=document.querySelector('.resultbox')
+                parent.innerHTML=html_content
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1 class="title">抽卡模拟器</h1>
+    <div class="board">
+        <div class="board-background">
+            <div class="lunacy">
+                <img src="lunacy.webp" class="lunacy-img">
+                <div class="lunacy-show">
+                    <p class="lunacy-num"><b>狂气数量:</b></p>
+                    <input class="lunacy-input" placeholder="请输入狂气数量">
+                </div>
+                <button class="extract" id="e-1" onclick="extract_for_one()">
+                    <img src="lunacy.webp" style="width:35px">
+                    <div class="extract-text">
+                        <p>x130</p>
+                        <p>抽取一次</p>
+                    </div>
+                </button>
+                <button class="extract" id="e-2" onclick="extract_for_ten()">
+                    <img src="lunacy.webp" style="width:35px">
+                    <div class="extract-text">
+                        <p>x1300</p>
+                        <p>抽取十次</p>
+                    </div>
+                </button>
+            </div>
+            <div class="resultbox">
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
